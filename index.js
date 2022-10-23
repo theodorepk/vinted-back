@@ -18,6 +18,10 @@ app.use(userRoutes);
 app.use(offerRoutes);
 app.use(payRoutes);
 
+app.get(`/`, (req, res) => {
+  res.status(200).json({ message: `Welcome to vinted API` });
+});
+
 app.all(`*`, (req, res) => {
   try {
     res.status(404).json({ message: `This route doesn't exist` });
