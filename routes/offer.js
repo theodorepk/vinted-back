@@ -150,6 +150,7 @@ router.get(`/offers`, async (req, res) => {
       page = 0;
     }
 
+    const allOffer = await Offer.find();
     const offerToFind = await Offer.find(filters)
       .populate(`owner`, "_id account")
       .sort(sort)
@@ -157,8 +158,8 @@ router.get(`/offers`, async (req, res) => {
       .limit(limit);
 
     const offerToSend = {
-      min: Math.min(...offerToFind.map((item) => item.product_price)),
-      max: Math.max(...offerToFind.map((item) => item.product_price)),
+      min: Math.min(...allOffer.map((item) => item.product_price)),
+      max: Math.max(...allOffer.map((item) => item.product_price)),
       offers: offerToFind,
     };
 
