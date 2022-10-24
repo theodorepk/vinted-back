@@ -156,7 +156,13 @@ router.get(`/offers`, async (req, res) => {
       .skip(page)
       .limit(limit);
 
-    res.status(200).json(offerToFind);
+    const offerToSend = {
+      min: Math.min(...offerToFind.map((item) => item.product_price)),
+      max: Math.max(...offerToFind.map((item) => item.product_price)),
+      offers: offerToFind,
+    };
+
+    res.status(200).json(offerToSend);
   } catch (error) {
     res.status(400).json(error.message);
   }
